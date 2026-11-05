@@ -2,6 +2,8 @@
 
 `grill-me` takes a **loose idea** and interviews you until you can commit to it. You do not need a worked-out plan to start, because the [session](https://www.aihero.dev/ai-coding-dictionary/session) exists to produce one. It asks in **rounds**. Each round is the whole **frontier**, which is every question whose prerequisites you have already settled. So it never asks you something that depends on an answer it hasn't heard yet.
 
+For each decision, you get a short table of options before the agent gives its pick. You can see what each choice would mean, what you gain and give up, and what else it affects. For example, if you agreed that people could edit a shared document, choosing anonymous link access raises a separate decision about whether anyone who receives a forwarded link can edit it. The agent surfaces that consequence and explains which option it recommends given your goals.
+
 It is **[stateless](https://www.aihero.dev/ai-coding-dictionary/stateless)**. It writes no files and leaves no workspace behind. The only result is a clearer version of the idea, in your own head.
 
 ## When to reach for it
@@ -25,6 +27,8 @@ The skill asks the questions, but **you** own the scope. People often miss this.
 The failure mode is **passivity**: answering "agreed, agreed, agreed" for forty questions and coming out with a plan the agent wrote and you nodded at. It feels productive because it was long. But you decided nothing, and the result looks more certain than it is.
 
 Being active means steering. Push back on a question that is less detailed than you need. Say when the scope is drifting. Answer "I don't know" and mean it. This skill helps an engineer and does not replace one. The quality of the result depends on the quality of your answers, not on the number of questions.
+
+After each round, the agent reflects back what you agreed. If a later answer would change an earlier decision, you see the conflict and decide whether to revise it. Before implementation, you review the agreed scope, its consequences, and anything still open. Building starts when you explicitly approve that scope. If the build reveals a materially different consequence, the agent pauses the affected work and brings the choice back to you.
 
 The opposite error is real but rarer: staying in the interview so long you never reach code.
 
@@ -71,6 +75,6 @@ More than for most skills. Grilling depends on the [model](https://www.aihero.de
 
 `grill-me` is a **standalone you can run anywhere, on anything**. Because it is stateless, it is portable. It needs no repo, workspace, or setup, and does not assume the idea is about software. People use it for business decisions, for writing, and for what to do next: anything they cannot think through clearly on their own.
 
-Portability is the only difference from [grill-with-docs](https://aihero.dev/skills-grill-with-docs). That skill runs the same interview, but reads a codebase to align against and records what it learns as `GLOSSARY.md` and ADRs. Both use the [grilling](https://aihero.dev/skills-grilling) skill underneath. `grill-me` is the user-invoked entry point that keeps no state.
+Both `grill-me` and [grill-with-docs](https://aihero.dev/skills-grill-with-docs) use the [grilling](https://aihero.dev/skills-grilling) skill underneath. `grill-me` adds the per-question option comparison. `grill-with-docs` reads a codebase to align against and records what it learns as `GLOSSARY.md` and ADRs.
 
 If what you grilled does turn out to be software, you can hand the same conversation to [to-spec](https://aihero.dev/skills-to-spec) and carry on into the build flow (an option, not the point of the skill). When you're unsure which flow fits, [ask-matt](https://aihero.dev/skills-ask-matt) routes you.
