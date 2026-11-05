@@ -5,26 +5,25 @@ description: Grill the user relentlessly about a plan, decision, or idea. Use wh
 
 Interview the user relentlessly until you reach a shared understanding. Map this as a **design tree**: every decision branches into the decisions that hang off it.
 
-Work the tree in **rounds**. The **frontier** is every decision whose prerequisites are already settled: the questions you can ask _now_ without guessing at answers you haven't heard yet. Ask the whole frontier in one round: number each question and give your recommended answer. Then wait for the user's answers before the next round.
+Work the tree in **rounds**. The **frontier** contains every decision whose prerequisites are settled. Ask the whole frontier as numbered questions, then wait for the user's answers. If one choice depends on another, ask the upstream question first and save the dependent one for the next round.
 
-Format a round like so:
+For each question, compare the viable options, usually two or three. Spell out any consequence the user could easily miss before asking them to choose. For example, if anyone with a link can open a draft, a recipient who forwards it is effectively deciding who else can read it. Focus on effects that could change the user's answer, including earlier agreements the choice would reopen or work that would be costly to undo. If only one option is feasible, explain the constraint.
 
 ```
-❓ **Q1** - **<question title>**: <question body, might be multiple paragraphs, including multiple choices>
+❓ **Q1. <What decision does the user need to make?>**
 
-➡️ <your recommended answer>
+| Option | What it means in practice | What you gain and give up | Who or what it affects |
+| --- | --- | --- | --- |
+| <A> | ... | ... | ... |
+| <B> | ... | ... | ... |
 
----
-
-❓ **Q2** - **<question title>**: <question body, might be multiple paragraphs, including multiple choices>
-
-➡️ <your recommended answer>
+➡️ **I recommend <option>.** <Explain which user goal, constraint, or earlier decision tips the balance and why the cost is worth accepting.>
 ```
 
-Word each question so "yes" accepts your recommended answer.
+The user can say "yes" to accept a question's recommendation, pick another option, or suggest their own. A recommendation stays a proposal until the user chooses.
 
-Each round the user answers reshapes the tree: settled decisions push the frontier outward and unblock questions that depended on them. Recompute the frontier and ask the next round. A question whose answer depends on another question still open in this round belongs to a _later_ round, not this one.
+After each round, briefly reflect back what the answers settled and recompute the frontier. If a later answer or discovery conflicts with an earlier agreement, name that agreement, explain what would change, and let the user decide whether to revise it.
 
-Finding _facts_ is your job, never the user's. When a frontier question needs a fact from the environment (filesystem, tools, etc.), dispatch a sub-agent with a fresh context window to find it; don't ask the user for anything you could look up yourself. Don't block on it: a running exploration is an unsettled prerequisite, so only the questions downstream of it wait for the sub-agent to report; ask the rest of the frontier now. The _decisions_ are the user's: put each to them and wait.
+Use the available evidence to distinguish known effects from assumptions. For facts you can look up, dispatch a subagent with a fresh context window if available, or check directly. Keep the investigation read-only. While a fact is pending, continue with independent questions. If only the user knows a fact that could reverse your recommendation, ask for it before presenting the dependent choice.
 
-The session is done when the frontier is empty: every branch of the design tree visited, nothing left silently assumed. Do not act on it until the user confirms you have reached a shared understanding.
+When every branch has been discussed, summarize the agreed scope, the material consequences, and anything the user chose to defer. Keep the interview in the conversation. Start implementation only after the user explicitly approves building that scope. A "yes" to a design question settles only that question. If the build reveals a materially different impact, pause the affected work and discuss it with the user before proceeding.
